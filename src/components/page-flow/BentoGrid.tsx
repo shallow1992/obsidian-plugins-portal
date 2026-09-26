@@ -1,20 +1,24 @@
 import React from "react";
-import { Zap, ShieldCheck, Compass, GitMerge, RotateCcw, Activity } from "lucide-react";
+import { Zap, ShieldCheck, GitMerge, RotateCcw } from "lucide-react";
+import { Dictionary } from "@/locales";
 
-export default function BentoGrid() {
+interface BentoGridProps {
+  dict: Dictionary["pageFlow"]["bento"];
+}
+
+export default function BentoGrid({ dict }: BentoGridProps) {
   return (
     <section className="py-20 relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
           <h2 className="text-xs uppercase font-bold tracking-widest text-purple-400">
-            Engineered for Flow
+            {dict.badge}
           </h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Features that make reading feel like flight
+            {dict.title}
           </p>
           <p className="text-sm sm:text-base text-zinc-400">
-            Every millimeter of motion, acceleration curve, and boundary transition is calibrated
-            to keep your eyes relaxed and focused.
+            {dict.subtitle}
           </p>
         </div>
 
@@ -27,19 +31,17 @@ export default function BentoGrid() {
                 <GitMerge className="w-5 h-5" />
               </div>
               <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
-                Hybrid Single-Key Navigation
+                {dict.hybrid.title}
               </h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Tapping forward scrolls down through your note content. When the bottom is reached,
-                the very next tap automatically opens the next note in your folder, placing you
-                instantly at the top. Symmetrical backward glide brings you up to the bottom of the previous note.
+                {dict.hybrid.desc}
               </p>
               <div className="pt-2 flex flex-wrap gap-2 text-xs">
                 <span className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono">
-                  Default: 85% Viewport Step
+                  {dict.hybrid.tag1}
                 </span>
                 <span className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono">
-                  Fine-tunable 10% - 100%
+                  {dict.hybrid.tag2}
                 </span>
               </div>
             </div>
@@ -67,16 +69,15 @@ export default function BentoGrid() {
                 <Zap className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition-colors">
-                Continuous Momentum
+                {dict.momentum.title}
               </h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Rapidly tapping your hotkey ramps up cruising speed smoothly. Velocity and distance
-                scale in lockstep so you never feel stuttering or sudden pauses.
+                {dict.momentum.desc}
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-zinc-800 text-xs font-mono text-zinc-500 flex items-center justify-between">
-              <span>Acceleration</span>
-              <span className="text-amber-400 font-bold">Up to 5.0x Cruise</span>
+              <span>{dict.momentum.statLabel}</span>
+              <span className="text-amber-400 font-bold">{dict.momentum.statVal}</span>
             </div>
           </div>
 
@@ -87,16 +88,15 @@ export default function BentoGrid() {
                 <RotateCcw className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-white group-hover:text-red-300 transition-colors">
-                Instant Reverse Brake
+                {dict.brake.title}
               </h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Cruising too fast? Tapping the opposite key immediately cancels all forward momentum
-                and halts the viewport on a dime. Zero accidental jumps.
+                {dict.brake.desc}
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-zinc-800 text-xs font-mono text-zinc-500 flex items-center justify-between">
-              <span>Momentum Cancel</span>
-              <span className="text-red-400 font-bold">Instant 0.0s Stop</span>
+              <span>{dict.brake.statLabel}</span>
+              <span className="text-red-400 font-bold">{dict.brake.statVal}</span>
             </div>
           </div>
 
@@ -107,22 +107,20 @@ export default function BentoGrid() {
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">
-                File Explorer Sync &amp; Layout-Shift Shield
+                {dict.shield.title}
               </h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Page Flow accurately mirrors your Obsidian File Explorer order—including manual
-                rearrangements and custom sort modes. It is strictly scoped to the active folder
-                and resists CodeMirror 6 virtual height recalculations in documents with 50,000+ words.
+                {dict.shield.desc}
               </p>
               <div className="pt-2 flex flex-wrap gap-2 text-xs">
                 <span className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono">
-                  Strict Folder Boundary
+                  {dict.shield.tag1}
                 </span>
                 <span className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono">
-                  CM6 Viewport Math
+                  {dict.shield.tag2}
                 </span>
                 <span className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono">
-                  Fly-by Protection
+                  {dict.shield.tag3}
                 </span>
               </div>
             </div>

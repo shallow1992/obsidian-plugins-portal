@@ -1,67 +1,25 @@
 import React from "react";
-import { Keyboard, Sliders, CheckCircle2 } from "lucide-react";
+import { Keyboard, CheckCircle2 } from "lucide-react";
+import { Dictionary } from "@/locales";
 
-interface HotkeyRow {
-  action: string;
-  recommended: string;
-  vimStyle: string;
-  description: string;
+interface HotkeyTableProps {
+  dict: Dictionary["pageFlow"]["hotkeys"];
 }
 
-const HOTKEYS: HotkeyRow[] = [
-  {
-    action: "Forward: Scroll down or open next file",
-    recommended: "Alt + Space",
-    vimStyle: "Alt + J",
-    description: "Main primary forward glide. Scrolls note, then glides to next file."
-  },
-  {
-    action: "Backward: Scroll up or open previous file",
-    recommended: "Alt + Shift + Space",
-    vimStyle: "Alt + K",
-    description: "Symmetrical reverse glide. Scrolls up, then opens previous file at bottom."
-  },
-  {
-    action: "Dedicated: Scroll page down only",
-    recommended: "Space / PageDown",
-    vimStyle: "Ctrl + F",
-    description: "In-note continuous scroll without file boundary transitions."
-  },
-  {
-    action: "Dedicated: Scroll page up only",
-    recommended: "Shift + Space / PageUp",
-    vimStyle: "Ctrl + B",
-    description: "In-note reverse scroll without file boundary transitions."
-  },
-  {
-    action: "Dedicated: Go to next file immediately",
-    recommended: "Alt + Down",
-    vimStyle: "Alt + L",
-    description: "Instantly switches to the next note regardless of scroll position."
-  },
-  {
-    action: "Dedicated: Go to previous file immediately",
-    recommended: "Alt + Up",
-    vimStyle: "Alt + H",
-    description: "Instantly switches to previous note regardless of scroll position."
-  }
-];
-
-export default function HotkeyTable() {
+export default function HotkeyTable({ dict }: HotkeyTableProps) {
   return (
     <section className="py-20 relative bg-zinc-950/40 border-y border-zinc-800/60">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-950/40 border border-purple-800/40 text-xs font-mono text-purple-300">
             <Keyboard className="w-3.5 h-3.5" />
-            <span>Fully Configurable Keybindings</span>
+            <span>{dict.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Designed for Home Row Speed
+            {dict.title}
           </h2>
           <p className="text-sm text-zinc-400">
-            All commands integrate seamlessly with Obsidian’s native hotkey settings.
-            Choose your preferred style or map any custom modifiers.
+            {dict.subtitle}
           </p>
         </div>
 
@@ -71,14 +29,14 @@ export default function HotkeyTable() {
             <table className="w-full text-left text-sm text-zinc-300">
               <thead className="bg-zinc-900/90 text-xs uppercase font-mono text-zinc-400 border-b border-zinc-800">
                 <tr>
-                  <th className="py-4 px-6 font-semibold">Command Action</th>
-                  <th className="py-4 px-6 font-semibold">Recommended Hotkey</th>
-                  <th className="py-4 px-6 font-semibold">Vim / Compact Style</th>
-                  <th className="py-4 px-6 font-semibold hidden md:table-cell">Behavior</th>
+                  <th className="py-4 px-6 font-semibold">{dict.colAction}</th>
+                  <th className="py-4 px-6 font-semibold">{dict.colRecommended}</th>
+                  <th className="py-4 px-6 font-semibold">{dict.colVim}</th>
+                  <th className="py-4 px-6 font-semibold hidden md:table-cell">{dict.colBehavior}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800/70">
-                {HOTKEYS.map((row, idx) => (
+                {dict.rows.map((row, idx) => (
                   <tr key={idx} className="hover:bg-zinc-800/30 transition-colors">
                     <td className="py-4 px-6 font-medium text-white flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />

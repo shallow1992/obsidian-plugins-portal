@@ -1,0 +1,53 @@
+import React from "react";
+import Link from "next/link";
+import { Sparkles, Compass, Layers } from "lucide-react";
+import LanguageSelector from "@/components/ui/LanguageSelector";
+import { Locale, Dictionary } from "@/locales";
+
+interface HeaderProps {
+  lang: Locale;
+  dict: Dictionary["nav"];
+}
+
+export default function Header({ lang, dict }: HeaderProps) {
+  const homePath = `/${lang}`;
+  const pageFlowPath = `/${lang}/plugins/page-flow`;
+
+  return (
+    <header className="sticky top-0 z-50 glass-panel border-b border-zinc-800/80">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <Link
+          href={homePath}
+          className="flex items-center gap-2.5 font-semibold text-lg tracking-tight hover:opacity-90 transition-opacity"
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+            <Sparkles className="w-4 h-4 text-white" />
+          </div>
+          <span className="text-zinc-100">{dict.suiteTitle}</span>
+        </Link>
+
+        <div className="flex items-center gap-6">
+          <nav className="flex items-center gap-5 text-sm font-medium text-zinc-400">
+            <Link
+              href={pageFlowPath}
+              className="hover:text-zinc-100 transition-colors flex items-center gap-1.5"
+            >
+              <Compass className="w-4 h-4 text-purple-400" />
+              <span>{dict.pageFlow}</span>
+            </Link>
+            <Link
+              href={homePath}
+              className="hover:text-zinc-100 transition-colors flex items-center gap-1.5 hidden sm:flex"
+            >
+              <Layers className="w-4 h-4" />
+              <span>{dict.allPlugins}</span>
+            </Link>
+          </nav>
+
+          {/* Language Selector */}
+          <LanguageSelector currentLang={lang} />
+        </div>
+      </div>
+    </header>
+  );
+}
