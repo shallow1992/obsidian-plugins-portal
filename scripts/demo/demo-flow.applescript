@@ -15,8 +15,12 @@ on run argv
         set mode to item 1 of argv
     end if
 
-    -- Countdown for user to trigger Cmd+Shift+5 screen recording
-    log "Starting in 3 seconds... Switch focus to Obsidian and hit Record!"
+    -- Countdown for user to trigger screen recording or settle window
+    log "Starting in 5 seconds... Ready Obsidian!"
+    delay 1.0
+    log "4..."
+    delay 1.0
+    log "3..."
     delay 1.0
     log "2..."
     delay 1.0
