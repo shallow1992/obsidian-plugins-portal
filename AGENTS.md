@@ -1,0 +1,83 @@
+# AI Agent Guidelines (AGENTS.md)
+
+Guidelines, architectural constraints, and operational principles for AI coding agents (Claude Code, Antigravity, etc.) and contributors working on **Obsidian Plugins Portal** (`obsidian-plugins-portal`).
+
+---
+
+## 1. Development Environment & Docker Isolation (Mandatory)
+
+To guarantee clean, reproducible development and prevent host environment pollution:
+- **Execute all project commands strictly inside Docker containers**:
+  - `docker compose run --rm obsidian-plugins-portal npm run build` (Static export & type check)
+  - `docker compose run --rm obsidian-plugins-portal npm run lint` (ESLint & code quality)
+  - `docker compose run --rm obsidian-plugins-portal npm install <pkg>` (Dependency management)
+  - `docker compose up -d` (Local development preview at `http://localhost:3000`)
+- **Zero Host Execution**: Never run Node.js, npm, or build scripts directly on the host machine.
+- **Single-Command Execution**: Execute commands individually without chaining (`&&`, `;`, `||`) to preserve command auto-approval allowlists.
+
+---
+
+## 2. Architecture & Design Principles
+
+The portal is designed as a fast, accessible, multilingual static showcase for Obsidian plugins:
+
+- **Next.js 14 App Router + Pure Static Export**:
+  - Must remain 100% statically exportable via `output: 'export'` in `next.config.mjs`.
+  - Zero Node.js runtime servers in production (compatible with Cloudflare Pages and GitHub Pages).
+- **Path-Based Multilingual Routing (`/[lang]/...`)**:
+  - Languages supported: English (`/en/...`) and Japanese (`/ja/...`).
+  - Implements static dictionary lookup with full TypeScript type safety (`src/i18n/dictionaries.ts`).
+  - Root `/` automatically detects and performs client-side redirect to default locale (`/en`).
+- **Interactive Component Simulation**:
+  - Plugin showcase pages (e.g. `/plugins/page-flow`) feature live interactive simulators (e.g. Space key flight simulator) with full keyboard accessibility.
+  - Direct Obsidian URI installation CTA (`obsidian://show-plugin?id=<id>`).
+- **Design System**:
+  - Tailwind CSS with rich dark theme aesthetics matching Obsidian, Lucide Icons, and Bento Grid layouts.
+
+---
+
+## 3. Git Worktree & Multi-Agent Isolation Workflow
+
+To safely coordinate multiple AI agents operating in the same repository:
+
+- **1 Issue = 1 Branch = 1 Worktree Isolation**:
+  - Never perform parallel feature work directly on `master`.
+- **Namespace Separation**:
+  - **Claude Code**: `<repo>/.claude/worktrees/issue-<number>-<short-desc>/`
+  - **Antigravity**: `<repo>/.gemini/.worktrees/issue-<number>-<short-desc>/`
+- **Creation from Fresh Base**:
+  ```bash
+  # Example for Antigravity:
+  git worktree add -b issue-<num>-<desc> .gemini/.worktrees/issue-<num>-<desc> origin/master
+  ```
+- **Post-Merge Cleanup Protocol**:
+  1. Tear down container volumes: `docker compose down -v`
+  2. Pull latest master: `git pull --ff-only`
+  3. Remove worktree: `git worktree remove .gemini/.worktrees/issue-<num>-<desc>`
+  4. Delete local branch: `git branch -d issue-<num>-<desc>`
+  5. Prune remote tracking: `git fetch --prune`
+
+---
+
+## 4. Conventional Commits & Remote CI Verification
+
+- **Commit Message Format**:
+  - Commits and PR titles must adhere to Conventional Commits:
+    - `feat:` (New features or pages)
+    - `fix:` (Bug fixes or rendering corrections)
+    - `docs:` (Documentation and guide updates)
+    - `refactor:` (Code structure improvements with no behavior change)
+    - `chore:` (Dependencies, configuration, housekeeping)
+    - `ci:` (GitHub Actions workflow adjustments)
+- **Squash and Merge**:
+  - All PRs must be squash-merged into `master` to maintain a clean linear commit graph.
+- **Mandatory CI Verification**:
+  - Before merging, verify GitHub Actions workflow status (`gh pr checks <PR-number>`). Ensure all builds pass.
+
+---
+
+## 5. Security & Privacy (Zero Leak Policy)
+
+- **Zero Plaintext Secrets**: No tokens, API keys, or private credentials committed to git.
+- **Zero Host Environment Leaks**: Never commit machine names, OS usernames, local absolute paths (`/Users/...`), or personal email addresses.
+- **Raw Media Safety**: Raw screen recordings (`raw_recordings/` and `*.mov`) must always remain ignored in `.gitignore`.
