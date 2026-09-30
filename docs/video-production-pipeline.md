@@ -127,8 +127,12 @@ ElevenLabs（[elevenlabs.io](https://elevenlabs.io/)）を使用して、シー�
 #### 方法 B: API / エージェントによる自動生成
 API キーを使用し、エージェントやスクリプトから自動一括生成することも可能です。
 
-1. **API キーの取得**:
+1. **API キーの取得と設定**:
    - ElevenLabs 画面左下の「Profile Icon」→「API Keys」よりキーを発行。
+   - リポジトリのテンプレートをコピーし、`.env.local` にキーを設定（`.env*.local` は `.gitignore` に登録済み）：
+     ```bash
+     cp .env.example .env.local
+     ```
 2. **API コール例**:
    ```bash
    curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}" \
