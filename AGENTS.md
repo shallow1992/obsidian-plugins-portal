@@ -1,6 +1,6 @@
 # AI Agent Guidelines (AGENTS.md)
 
-Guidelines, architectural constraints, and operational principles for AI coding agents (Claude Code, Antigravity, etc.) and contributors working on **Obsidian Plugins Portal** (`obsidian-plugins-portal`).
+Guidelines, architectural constraints, and operational workflows for AI coding agents (Claude Code, Antigravity, etc.) working on **Obsidian Plugins Portal** (`obsidian-plugins-portal`).
 
 ---
 
@@ -17,29 +17,22 @@ To guarantee clean, reproducible development and prevent host environment pollut
 
 ---
 
-## 2. Architecture & Design Principles
+## 2. Architecture & Technical Constraints
 
-The portal is designed as a fast, accessible, multilingual static showcase for Obsidian plugins:
-
-- **Next.js 14 App Router + Pure Static Export**:
+The portal is designed as a fast, accessible, multilingual static showcase:
+- **Pure Static Export (`output: 'export'`)**:
   - Must remain 100% statically exportable via `output: 'export'` in `next.config.mjs`.
   - Zero Node.js runtime servers in production (compatible with Cloudflare Pages and GitHub Pages).
 - **Path-Based Multilingual Routing (`/[lang]/...`)**:
   - Languages supported: English (`/en/...`) and Japanese (`/ja/...`).
-  - Implements static dictionary lookup with full TypeScript type safety (`src/i18n/dictionaries.ts`).
+  - Implements static dictionary lookup with strict TypeScript type safety (`src/i18n/dictionaries.ts`).
   - Root `/` automatically detects and performs client-side redirect to default locale (`/en`).
-- **Interactive Component Simulation**:
-  - Plugin showcase pages (e.g. `/plugins/page-flow`) feature live interactive simulators (e.g. Space key flight simulator) with full keyboard accessibility.
-  - Direct Obsidian URI installation CTA (`obsidian://show-plugin?id=<id>`).
-- **Design System**:
-  - Tailwind CSS with rich dark theme aesthetics matching Obsidian, Lucide Icons, and Bento Grid layouts.
 
 ---
 
 ## 3. Git Worktree & Multi-Agent Isolation Workflow
 
 To safely coordinate multiple AI agents operating in the same repository:
-
 - **1 Issue = 1 Branch = 1 Worktree Isolation**:
   - Never perform parallel feature work directly on `master`.
 - **Namespace Separation**:
@@ -80,4 +73,3 @@ To safely coordinate multiple AI agents operating in the same repository:
 
 - **Zero Plaintext Secrets**: No tokens, API keys, or private credentials committed to git.
 - **Zero Host Environment Leaks**: Never commit machine names, OS usernames, local absolute paths (`/Users/...`), or personal email addresses.
-- **Raw Media Safety**: Raw screen recordings (`raw_recordings/` and `*.mov`) must always remain ignored in `.gitignore`.
