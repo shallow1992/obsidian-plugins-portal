@@ -35,3 +35,7 @@ next-env.d.ts
 # raw demo recordings
 /raw_recordings/
 *.mov
+
+# agent worktrees
+/.gemini/
+/.claude/
