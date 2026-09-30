@@ -15,21 +15,9 @@ on run argv
         set mode to item 1 of argv
     end if
 
-    -- Countdown for user / system to settle window focus
-    log "Starting in 5 seconds... Ready Obsidian!"
-    delay 1.0
-    log "4..."
-    delay 1.0
-    log "3..."
-    delay 1.0
-    log "2..."
-    delay 1.0
-    log "1..."
-    delay 1.0
-
-    -- Activate Obsidian
+    -- Ensure Obsidian is focused
     tell application "Obsidian" to activate
-    delay 1.0
+    delay 0.5
 
     if mode is "scene1" then
         my runScene1()
@@ -44,10 +32,10 @@ on run argv
         my runScene2()
         delay 2.0
         my runScene3()
-        delay 1.5
+        delay 1.0
     end if
 
-    log "Demo automation completed successfully."
+    log "Demo automation script finished."
 end run
 
 -- -----------------------------------------------------------------------------
