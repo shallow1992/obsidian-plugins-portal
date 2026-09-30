@@ -1,7 +1,7 @@
 {
   "project": "obsidian-page-flow",
   "title": "Obsidian Page Flow Demo Showcase",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "total_target_duration_sec": 23.5,
   "scenes": [
     {
@@ -12,9 +12,14 @@
         "ja": "Obsidianでノートを読むとき、いちいちサイドバーをクリックしていませんか？",
         "en": "Still clicking the sidebar every time you finish reading a note in Obsidian?"
       },
+      "plugin_interaction": {
+        "command_id": null,
+        "keys": ["PageDown", "Mouse pointer movement"],
+        "mechanism": "Default scrolling without Page Flow (hits note footer boundary)"
+      },
       "visual": {
-        "action": "Scroll to bottom of note, hit boundary, hesitate towards file explorer",
-        "hud_overlay": "Highlight file explorer"
+        "action": "Scroll down long note, hit boundary at footer, mouse cursor wanders toward left sidebar file explorer",
+        "hud_overlay": "Highlight file explorer (hesitation)"
       }
     },
     {
@@ -25,9 +30,14 @@
         "ja": "Page Flowなら、スペースキーを叩くだけ。ノートの末尾に到達すると、流れるように次のファイルへ滑空します。",
         "en": "With Page Flow, just hit Space. Once you reach the bottom, glide effortlessly into the next file."
       },
+      "plugin_interaction": {
+        "command_id": "scroll-or-next",
+        "keys": ["Space (or Option+Space)"],
+        "mechanism": "Hybrid scroll: 85% viewport scroll + seamless file navigation across note boundary"
+      },
       "visual": {
-        "action": "Hit Space key, smooth scroll, glide seamlessly across note boundary to next note",
-        "hud_overlay": "Space key badge popup, smooth zoom"
+        "action": "Hit Space for smooth scroll, hit Space at footer to glide seamlessly into next note in explorer order, rapid consecutive presses across 2-3 notes",
+        "hud_overlay": "Space key badge popup, smooth camera zoom"
       }
     },
     {
@@ -38,9 +48,14 @@
         "ja": "戻りたい時は Shift とスペース。いつでも矢印キーでピタッと急ブレーキ。",
         "en": "Need to go back? Press Shift + Space. And hit the arrow keys anytime for instant braking."
       },
+      "plugin_interaction": {
+        "command_id": "scroll-or-prev",
+        "keys": ["Shift+Space (or Option+Shift+Space)", "Up Arrow (Brake)"],
+        "mechanism": "Reverse hybrid navigation + Reversal brake physics in scroller.ts"
+      },
       "visual": {
-        "action": "Hit Shift+Space to reverse glide, then hit Up Arrow to brake instantly",
-        "hud_overlay": "Shift+Space badge, Brake indicator"
+        "action": "Hit Shift+Space to reverse glide to previous note, then while cruising forward, hit Up arrow to trigger instant Reversal Brake halt",
+        "hud_overlay": "Shift+Space badge, Up Arrow Brake badge, micro camera vibration"
       }
     },
     {
@@ -51,9 +66,14 @@
         "ja": "キーボードだけで思考を止めない読書体験を。Page Flow、Obsidian コミュニティプラグインで今すぐ。",
         "en": "Never break your train of thought. Page Flow — available now on Obsidian Community Plugins."
       },
+      "plugin_interaction": {
+        "command_id": null,
+        "keys": ["Click Install & Enable"],
+        "mechanism": "Obsidian community plugin installation & Portal showcase"
+      },
       "visual": {
-        "action": "Show Community Plugins install screen, fade to portal banner and keybindings card",
-        "hud_overlay": "Install CTA highlight, Logo"
+        "action": "Show Community Plugins install & enable screen, fade to portal banner, logo and keybindings card",
+        "hud_overlay": "Install CTA highlight, Logo, Slogan subtitle"
       }
     }
   ]
