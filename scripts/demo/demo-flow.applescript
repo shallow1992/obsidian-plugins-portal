@@ -1,6 +1,6 @@
 -- ==============================================================================
--- Obsidian Page Flow Automated Demo Script
--- macOS Native AppleScript for Screen Recording
+-- Obsidian Page Flow Automated Demo Script (Human-Paced Realistic Flow)
+-- macOS Native AppleScript for High-Resolution Screen Recording
 -- ==============================================================================
 -- Keycodes:
 --   49  = Space
@@ -15,7 +15,7 @@ on run argv
         set mode to item 1 of argv
     end if
 
-    -- Countdown for user to trigger screen recording or settle window
+    -- Countdown for user / system to settle window focus
     log "Starting in 5 seconds... Ready Obsidian!"
     delay 1.0
     log "4..."
@@ -29,7 +29,7 @@ on run argv
 
     -- Activate Obsidian
     tell application "Obsidian" to activate
-    delay 0.8
+    delay 1.0
 
     if mode is "scene1" then
         my runScene1()
@@ -38,82 +38,123 @@ on run argv
     else if mode is "scene3" then
         my runScene3()
     else
-        -- Full playthrough
+        -- Full playthrough with natural human pauses between scenes
         my runScene1()
-        delay 1.5
+        delay 2.0
         my runScene2()
-        delay 1.5
+        delay 2.0
         my runScene3()
+        delay 1.5
     end if
 
     log "Demo automation completed successfully."
 end run
 
 -- -----------------------------------------------------------------------------
--- Scene 1: Hook (Scrolling hits bottom boundary, mouse wanders to file explorer)
--- Target Duration: ~4.5s
+-- Scene 1: Hook (Realistic reading, reaching bottom boundary, hitting the wall)
+-- Duration: ~8s
 -- -----------------------------------------------------------------------------
 on runScene1()
-    log "[Scene 1] Demonstrating default scrolling reaching bottom boundary..."
+    log "[Scene 1] Demonstrating default scrolling reaching bottom boundary and getting stuck..."
     tell application "System Events"
         tell process "Obsidian"
-            -- Scroll down using standard PageDown / Down arrow
+            -- Human pauses to read first section
+            delay 1.0
+            
+            -- First scroll step down
             key code 121 -- PageDown
             delay 1.2
-            key code 121 -- PageDown (hits bottom)
+            
+            -- Reads second section
+            delay 0.8
+            
+            -- Second scroll step down (hits footer / bottom)
+            key code 121 -- PageDown
+            delay 1.0
+            
+            -- Tries scrolling again, but nothing happens (hitting the wall)
+            key code 121 -- PageDown
+            delay 0.4
+            key code 121 -- PageDown
             delay 1.5
             
-            -- Hesitation pause (mimics user thinking "Where do I click next?")
+            -- Hesitation pause: Mouse wanders toward left sidebar file explorer
             delay 1.5
         end tell
     end tell
 end runScene1
 
 -- -----------------------------------------------------------------------------
--- Scene 2: Core Value (Page Flow - Space / Option+Space glides across notes)
--- Target Duration: ~7.5s
+-- Scene 2: Core Value (Page Flow - Continuous Human Reading Across 3-4 Files)
+-- Duration: ~16s
 -- -----------------------------------------------------------------------------
 on runScene2()
-    log "[Scene 2] Demonstrating Page Flow seamless note gliding..."
+    log "[Scene 2] Demonstrating Page Flow gliding across multiple notes like a book..."
     tell application "System Events"
         tell process "Obsidian"
-            -- 1. First scroll step within note (85% smooth scroll)
-            -- Note: Option+Space (or Space in reading mode)
+            -- 1. Note 1: Read and scroll smoothly
+            delay 0.8
+            key code 49 using option down -- 85% smooth scroll
+            delay 1.4 -- Human reading pause
+            
+            -- 2. Note 1 -> Note 2: Hits boundary and GLIDES to Note 2! (1st Transition)
+            log "-> Gliding to 2nd note..."
             key code 49 using option down
-            delay 1.5
-
-            -- 2. Second press hits boundary and GLIDES to next note!
-            key code 49 using option down
-            delay 2.0
-
-            -- 3. Consecutive rapid presses (momentum acceleration) to next notes
+            delay 1.8 -- Savoring the smooth entry to Note 2
+            
+            -- 3. Note 2: Reading Note 2 and scrolling
             key code 49 using option down
             delay 1.2
+            
+            -- 4. Note 2 -> Note 3: Glides into Note 3! (2nd Transition)
+            log "-> Gliding to 3rd note..."
             key code 49 using option down
-            delay 1.8
+            delay 1.8 -- Savoring entry to Note 3
+            
+            -- 5. Note 3 -> Note 4: Rapid cruising speed (momentum chaining)
+            log "-> Rapid cruising acceleration across Note 3 and 4..."
+            key code 49 using option down
+            delay 0.8
+            key code 49 using option down -- (3rd Transition to Note 4!)
+            delay 0.9
+            key code 49 using option down -- (4th Transition to Note 5!)
+            delay 2.0 -- Finishing with a smooth landing
         end tell
     end tell
 end runScene2
 
 -- -----------------------------------------------------------------------------
--- Scene 3: Control & Safety (Reverse navigation & Reversal Brake)
--- Target Duration: ~6.5s
+-- Scene 3: Control & Safety (Reverse Navigation across files & Reversal Brake)
+-- Duration: ~10s
 -- -----------------------------------------------------------------------------
 on runScene3()
-    log "[Scene 3] Demonstrating reverse glide and instant reversal brake..."
+    log "[Scene 3] Demonstrating multi-file reverse glide and instant Reversal Brake..."
     tell application "System Events"
         tell process "Obsidian"
-            -- 1. Reverse navigation: Option + Shift + Space
+            -- 1. "Wait, let me go back to the previous note" -> Reverse glide to Note 4
+            log "<- Reverse gliding to previous note..."
             key code 49 using {option down, shift down}
-            delay 2.0
-
-            -- 2. Forward glide begins...
+            delay 1.5
+            
+            -- 2. Reverse glide once more to Note 3
+            log "<- Reverse gliding once more..."
+            key code 49 using {option down, shift down}
+            delay 1.5
+            
+            -- 3. Pause to check content: "Ah, here it is!"
+            delay 1.2
+            
+            -- 4. Forward reading resumes with acceleration
+            log "-> Resuming forward glide..."
             key code 49 using option down
-            delay 0.3 -- Cruising velocity starts
-
-            -- 3. Emergency brake: Up arrow immediately halts momentum
-            key code 126 -- Up Arrow
-            delay 2.0
+            delay 0.4 -- Gaining momentum
+            key code 49 using option down
+            delay 0.25 -- Rapid chaining in progress!
+            
+            -- 5. EMERGENCY BRAKE: Hit Up Arrow mid-animation!
+            log "!! Reversal Brake engaged! Instant halt !!"
+            key code 126 -- Up Arrow halts all momentum immediately
+            delay 2.0 -- Rock-solid stop without overshoot
         end tell
     end tell
 end runScene3

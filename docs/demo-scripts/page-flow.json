@@ -1,13 +1,13 @@
 {
   "project": "obsidian-page-flow",
   "title": "Obsidian Page Flow Demo Showcase",
-  "version": "1.1.0",
-  "total_target_duration_sec": 23.5,
+  "version": "1.2.0",
+  "total_target_duration_sec": 39.0,
   "scenes": [
     {
       "id": "scene_01",
       "name": "Hook",
-      "target_duration_sec": 4.5,
+      "target_duration_sec": 8.0,
       "audio": {
         "ja": "Obsidianでノートを読むとき、いちいちサイドバーをクリックしていませんか？",
         "en": "Still clicking the sidebar every time you finish reading a note in Obsidian?"
@@ -18,14 +18,14 @@
         "mechanism": "Default scrolling without Page Flow (hits note footer boundary)"
       },
       "visual": {
-        "action": "Scroll down long note, hit boundary at footer, mouse cursor wanders toward left sidebar file explorer",
+        "action": "Scroll down long note, hit boundary at footer, multiple futile keypresses, mouse cursor wanders toward left sidebar file explorer",
         "hud_overlay": "Highlight file explorer (hesitation)"
       }
     },
     {
       "id": "scene_02",
       "name": "Core Flow",
-      "target_duration_sec": 7.5,
+      "target_duration_sec": 16.0,
       "audio": {
         "ja": "Page Flowなら、スペースキーを叩くだけ。ノートの末尾に到達すると、流れるように次のファイルへ滑空します。",
         "en": "With Page Flow, just hit Space. Once you reach the bottom, glide effortlessly into the next file."
@@ -33,17 +33,17 @@
       "plugin_interaction": {
         "command_id": "scroll-or-next",
         "keys": ["Space (or Option+Space)"],
-        "mechanism": "Hybrid scroll: 85% viewport scroll + seamless file navigation across note boundary"
+        "mechanism": "Hybrid scroll: 85% viewport scroll + seamless multi-file navigation across 3-4 notes"
       },
       "visual": {
-        "action": "Hit Space for smooth scroll, hit Space at footer to glide seamlessly into next note in explorer order, rapid consecutive presses across 2-3 notes",
+        "action": "Comfortable reading pace on Note 1, 1st glide to Note 2, 2nd glide to Note 3, rapid cruising momentum chaining into Note 4 and Note 5",
         "hud_overlay": "Space key badge popup, smooth camera zoom"
       }
     },
     {
       "id": "scene_03",
       "name": "Control and Safety",
-      "target_duration_sec": 6.5,
+      "target_duration_sec": 10.0,
       "audio": {
         "ja": "戻りたい時は Shift とスペース。いつでも矢印キーでピタッと急ブレーキ。",
         "en": "Need to go back? Press Shift + Space. And hit the arrow keys anytime for instant braking."
