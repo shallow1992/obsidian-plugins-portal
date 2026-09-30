@@ -8,7 +8,7 @@
 ## 1. 動画メタデータ ＆ プラグイン仕様マッピング (Metadata & Specifications)
 
 * **プロダクト名**: Obsidian Page Flow (`obsidian-page-flow`)
-* **想定再生時間**: 約 23〜25 秒
+* **想定再生時間**: 約 35〜40 秒（人間の読書リズム ＆ 複数ファイル滑空モデル）
 * **アスペクト比**: 16:9 (1920x1080) または 16:10 (1280x800)
 * **テーマ**: Obsidian ダークテーマ（フォントサイズ 16px、読みやすいコントラスト）
 * **ナレーション推奨ボイス**: `Adam`（低音・落ち着いたテック系）または `Rachel`（明瞭・軽快なチュートリアル系）
@@ -24,9 +24,9 @@
 
 | シーン | 目標尺 | 日本語原稿 (`ja`) | 英語原稿 (`en`) | プラグイン機能 / キー操作 | 画面の想定動作（詳細） |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Scene 1**<br>*(Hook: 課題提起)* | 約 4.5秒 | `Obsidianでノートを読むとき、いちいちサイドバーをクリックしていませんか？` | `Still clicking the sidebar every time you finish reading a note in Obsidian?` | **通常スクロール**<br>*(プラグイン不使用)*<br>`PageDown` / マウス操作 | 縦に長いノートを下までスクロールし、**最下部で行き止まりになる**。次のファイルを開くため、マウスカーソルが左サイドバー（ファイルエクスプローラー）へ迷いながら移動する様子を見せる。 |
-| **Scene 2**<br>*(Core: スペース滑空)* | 約 7.5秒 | `Page Flowなら、スペースキーを叩くだけ。ノートの末尾に到達すると、流れるように次のファイルへ滑空します。` | `With Page Flow, just hit Space. Once you reach the bottom, glide effortlessly into the next file.` | **`scroll-or-next`**<br>`Space`<br>*(または `Option + Space`)* | 1. <kbd>Space</kbd> 打鍵で 85% なめらかにページスクロール（文脈保持）。<br>2. ノート末尾到達時、もう一度打鍵すると**ノート境界を越えてシームレスに「次のファイル」へ滑空（Flow）**。<br>3. 連続打鍵により 2〜3 ノートを流れるように連続読破していく軽快さを実演。 |
-| **Scene 3**<br>*(Safety: 逆走＆ブレーキ)* | 約 6.5秒 | `戻りたい時は Shift とスペース。いつでも矢印キーでピタッと急ブレーキ。` | `Need to go back? Press Shift + Space. And hit the arrow keys anytime for instant braking.` | **`scroll-or-prev`**<br>`Shift + Space`<br>*(または `Option+Shift+Space`)*<br>＋ **`reversal brake`**<br>`↑` / 逆方向キー | 1. <kbd>Shift</kbd> + <kbd>Space</kbd> 打鍵で直前のノートへ瞬時に逆走遷移。<br>2. 連続前進アニメーションの巡航中に、逆方向キー（<kbd>↑</kbd> 等）を叩くと、**物理演算（Reversal Brake）が発動してその場でピタッと急停止**する様子を実演。暴走しない安心感を訴求。 |
+| **Scene 1**<br>*(Hook: 課題提起)* | 約 8.0秒 | `Obsidianでノートを読むとき、いちいちサイドバーをクリックしていませんか？` | `Still clicking the sidebar every time you finish reading a note in Obsidian?` | **通常スクロール**<br>*(プラグイン不使用)*<br>`PageDown` / ホイール | 冒頭を少し読み進めた後、下へスクロール。**ノート最下部で行き止まりになり、何度もキーを叩くが動かない壁に当たる**。マウスカーソルが左サイドバーへ迷いながら移動する様子を見せる。 |
+| **Scene 2**<br>*(Core: スペース滑空)* | 約 16.0秒 | `Page Flowなら、スペースキーを叩くだけ。ノートの末尾に到達すると、流れるように次のファイルへ滑空します。` | `With Page Flow, just hit Space. Once you reach the bottom, glide effortlessly into the next file.` | **`scroll-or-next`**<br>`Space`<br>*(または `Option+Space`)* | 1. 1冊の本を読むようにノート1を快適にスクロール。<br>2. 末尾到達で**ノート2へ1回目の滑空**。<br>3. 続いてノート2を読み終えて**ノート3へ2回目の滑空**。<br>4. 連打による加速（巡航速度）で**ノート4、ノート5へと3〜4ファイル連続で次々と滑空していく圧倒的な気持ちよさ**を実演。 |
+| **Scene 3**<br>*(Safety: 逆走＆ブレーキ)* | 約 10.0秒 | `戻りたい時は Shift とスペース。いつでも矢印キーでピタッと急ブレーキ。` | `Need to go back? Press Shift + Space. And hit the arrow keys anytime for instant braking.` | **`scroll-or-prev`**<br>`Shift + Space`<br>*(または `Option+Shift+Space`)*<br>＋ **`reversal brake`**<br>`↑` / 逆方向キー | 1. 「さっきのノート何だっけ？」と <kbd>Shift</kbd> + <kbd>Space</kbd> で**直前のノートへ2回連続で逆走遷移**。<br>2. 再び前進し、最高速で加速している最中に上矢印キー（<kbd>↑</kbd>）を叩いて**その場でピタッと強制急停止（Reversal Brake）**。 |
 | **Scene 4**<br>*(CTA: 結び)* | 約 5.0秒 | `キーボードだけで思考を止めない読書体験を。Page Flow、Obsidian コミュニティプラグインで今すぐ。` | `Never break your train of thought. Page Flow — available now on Obsidian Community Plugins.` | **インストール画面**<br>＋ **LP ブランドカード** | 1. Obsidian 設定「コミュニティプラグイン」で「Page Flow」を検索・有効化する画面。<br>2. ブランドロゴ、キーバインド一覧、ポータル URL が並ぶ洗練されたエンドカードへクロスフェード。 |
 
 ---
