@@ -42,6 +42,63 @@ The **Obsidian Plugins Portal** provides a visual showcase benchmarked against m
 
 ---
 
+## 📁 Project Architecture & Multi-Plugin Directory Structure
+
+The portal is designed with a scalable, modular architecture supporting both the unified plugins marketplace catalog and dedicated visual landing pages for each plugin:
+
+```text
+obsidian-plugins-portal/
+├── src/                                  # 🌐 Application Source Code
+│   ├── app/                              # Next.js App Router (Static Export)
+│   │   ├── [lang]/                       # Path-based i18n routing (/en, /ja)
+│   │   │   ├── page.tsx                  # [Catalog] Unified showcase of all plugins
+│   │   │   └── plugins/
+│   │   │       ├── page-flow/page.tsx    # [LP] Dedicated landing page for Page Flow
+│   │   │       └── <plugin-id>/page.tsx  # (Extensible) Future dedicated plugin LPs
+│   │   └── layout.tsx                    # Shared root layout (Header, Footer, Theme)
+│   │
+│   ├── components/                       # UI Component Modules
+│   │   ├── common/                       # Site-wide components (Header, Footer)
+│   │   ├── portal/                       # Unified catalog components (Grid, Filter, Cards)
+│   │   └── page-flow/                    # Page Flow LP components (Hero, Bento, Simulator)
+│   │       # Future plugins add components/<plugin-id>/
+│   │
+│   ├── data/
+│   │   └── plugins.ts                    # Master registry of all plugins (metadata, URLs, categories)
+│   │
+│   └── locales/                          # Type-safe i18n translation dictionaries
+│       ├── en.ts
+│       └── ja.ts
+│
+├── public/                               # 🖼️ Static Web Assets (Next.js public root)
+│   └── assets/
+│       └── plugins/
+│           ├── page-flow/                # Page Flow production assets
+│           │   ├── demo.mp4              # Compressed web demo video for hero
+│           │   ├── demo.webm             # WebM video fallback
+│           │   └── icon.svg              # Plugin branding icon
+│           └── <plugin-id>/              # Production assets for future plugins
+│
+├── docs/                                 # 📚 Documentation & Specifications
+│   ├── video-production-pipeline.md       # Generic AI video production pipeline specification
+│   └── plugins/                            # Plugin-specific scripts and scene metadata
+│       └── page-flow/
+│           ├── demo-script.md             # Narration script & visual storyboard
+│           └── demo-script.json           # Structured scene definitions
+│
+├── scripts/                              # 🎬 Automation & Tooling
+│   └── demo/
+│       ├── run.sh                          # Multi-plugin demo automation runner CLI
+│       └── plugins/                        # Plugin-specific automation scripts
+│           └── page-flow/
+│               └── demo.applescript       # Native macOS AppleScript interaction scenario
+│
+└── raw_recordings/                       # 🎥 Raw Screen Captures (Git-ignored)
+    └── <plugin-id>/                      # Plugin-segregated footage from screencapture
+```
+
+---
+
 ## 🛠️ Local Development (Docker Isolated)
 
 All project execution is containerized. No local Node.js installation is required.
