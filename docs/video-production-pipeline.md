@@ -38,7 +38,7 @@
 ```mermaid
 flowchart TD
     subgraph Step1["Step 1: 台本・シーン構造化"]
-        Script["docs/demo-script.json<br>(シーンID, セリフ, 操作内容, 目標秒数)"]
+        Script["docs/plugins/&lt;plugin-id&gt;/demo-script.json<br>(シーンID, セリフ, 操作内容, 目標秒数)"]
     end
 
     subgraph Step2["Step 2: 音声生成 & 秒数確定"]
@@ -122,7 +122,7 @@ ElevenLabs（[elevenlabs.io](https://elevenlabs.io/)）を使用して、シー�
    - Step 1 で定義したシーンごとの原稿（`audio_text`）を入力し、**「Generate speech」** をクリック。
    - 生成結果を試聴し、問題なければ右下の **「↓（Download）」** から MP3 を保存。
 5. **配置**:
-   - プロジェクト内の `assets/audio/` ディレクトリに、シーンID命名（例: `scene_01.mp3`, `scene_02.mp3`）で配置。
+   - プロジェクト内の `assets/audio/<plugin-id>/` ディレクトリに、シーンID命名（例: `scene_01.mp3`, `scene_02.mp3`）で配置。
 
 #### 方法 B: API / エージェントによる自動生成
 API キーを使用し、エージェントやスクリプトから自動一括生成することも可能です。
@@ -146,7 +146,7 @@ API キーを使用し、エージェントやスクリプトから自動一括�
          "similarity_boost": 0.75
        }
      }' \
-     --output assets/audio/scene_01.mp3
+     --output assets/audio/<plugin-id>/scene_01.mp3
    ```
 
 #### 秒数（Duration）の正確な計測
@@ -155,7 +155,7 @@ API キーを使用し、エージェントやスクリプトから自動一括�
 ```bash
 # Docker コンテナ内でミリ秒単位の尺を取得
 docker compose run --rm obsidian-plugins-portal \
-  ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 assets/audio/scene_01.mp3
+  ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 assets/audio/<plugin-id>/scene_01.mp3
 
 # 出力例: 4.238125 -> 4.2秒 (操作スクリプトの delay 計算基準として固定)
 ```
@@ -223,9 +223,9 @@ delay 0.2
 
 新規ツールやプラグインの動画を作成する際は、以下のチェックリスト順に実行します。
 
-- [ ] **1. 台本の作成**: 4 シーン（Hook, Core, Advanced, CTA）のセリフと画面アクションを Markdown で定義。
-- [ ] **2. 音声の生成**: ElevenLabs 等で各シーンの音声を生成し、`ffprobe` でミリ秒単位の尺を記録。
-- [ ] **3. 操作スクリプトの作成**: 記録した秒数を `delay` に反映した AppleScript を生成。
-- [ ] **4. 画面収録**: macOS 標準（Cmd+Shift+5）で操作を実行・収録。
+- [ ] **1. 台本の作成**: 4 シーン（Hook, Core, Advanced, CTA）のセリフと画面アクションを `docs/plugins/<plugin-id>/demo-script.md` で定義。
+- [ ] **2. 音声の生成**: ElevenLabs 等で各シーンの音声を生成（`assets/audio/<plugin-id>/`）し、`ffprobe` でミリ秒単位の尺を記録。
+- [ ] **3. 操作スクリプトの作成**: 記録した秒数を `delay` に反映した AppleScript を `scripts/demo/plugins/<plugin-id>/demo.applescript` に生成。
+- [ ] **4. 画面収録**: `./scripts/demo/run.sh <plugin-id> full --record` で操作を実行・自動収録（`raw_recordings/<plugin-id>/` に保存）。
 - [ ] **5. 自動編集と圧縮**: `video-use` / `ffmpeg` で結合、テロップ付与、Web用（MP4/WebM）とREADME用（GIF）を出力。
 - [ ] **6. リポジトリ配置**: LP コンポーネントおよび README の該当箇所に埋め込み。
