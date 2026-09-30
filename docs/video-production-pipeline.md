@@ -104,14 +104,57 @@ flowchart TD
 
 ### Step 2: 音声生成 ＆ 秒数確定 (Audio-First Lock)
 
-1. エージェントまたはスクリプト経由で ElevenLabs API を実行し、シーンごとの音声ファイルを生成：
-   - `audio/scene_01.mp3`
-   - `audio/scene_02.mp3`
-2. コンテナ内の `ffprobe` で各ファイルの**正確な再生時間（ミリ秒単位）**を取得・記録：
+ElevenLabs（[elevenlabs.io](https://elevenlabs.io/)）を使用して、シーンごとのナレーション音声を書き出します。  
+無料プラン（Free Tier）で毎月 10,000 文字（約 10〜15 分分の音声）が利用でき、一般的な 20〜30 秒のデモ動画（約 100 文字）であれば完全無料で制作可能です。
+
+#### 方法 A: Web ダッシュボードで生成（推奨・声色の試聴が容易）
+1. **ログイン ＆ 画面移動**:
+   - [elevenlabs.io](https://elevenlabs.io/) にログインし、左メニューの **「Speech」**（Text to Speech）を開く。
+2. **モデルの選択**:
+   - Model ドロップダウンから **`Eleven Multilingual v2`** を選択（日本語・英語のイントネーション・自然さが最高峰のモデル）。
+3. **ボイス（声色）の選定**:
+   - 声の一覧からプレビューを聴き、プロダクトのトーンに合った声を選択。
+   - *おすすめボイス例*:
+     - `Adam`: 落ち着いた低音（信頼感のあるテック系ナレーション）
+     - `Rachel`: 明るく明瞭なトーン（親しみやすい解説・チュートリアル）
+     - `George`: 知的で温かみのあるトーン（本格的な機能解説）
+4. **生成 ＆ ダウンロード**:
+   - Step 1 で定義したシーンごとの原稿（`audio_text`）を入力し、**「Generate speech」** をクリック。
+   - 生成結果を試聴し、問題なければ右下の **「↓（Download）」** から MP3 を保存。
+5. **配置**:
+   - プロジェクト内の `assets/audio/` ディレクトリに、シーンID命名（例: `scene_01.mp3`, `scene_02.mp3`）で配置。
+
+#### 方法 B: API / エージェントによる自動生成
+API キーを使用し、エージェントやスクリプトから自動一括生成することも可能です。
+
+1. **API キーの取得**:
+   - ElevenLabs 画面左下の「Profile Icon」→「API Keys」よりキーを発行。
+2. **API コール例**:
    ```bash
-   ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 audio/scene_01.mp3
-   # 出力例: 4.238125 -> 4.2秒と確定
+   curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}" \
+     -H "xi-api-key: {YOUR_API_KEY}" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "text": "Obsidianでノートを読むとき、いちいちサイドバーをクリックしていませんか？",
+       "model_id": "eleven_multilingual_v2",
+       "voice_settings": {
+         "stability": 0.5,
+         "similarity_boost": 0.75
+       }
+     }' \
+     --output assets/audio/scene_01.mp3
    ```
+
+#### 秒数（Duration）の正確な計測
+生成された音声ファイルの再生時間（秒数）を Docker コンテナ内の `ffprobe` で計測し、Step 3 の操作待機時間として確定させます。
+
+```bash
+# Docker コンテナ内でミリ秒単位の尺を取得
+docker compose run --rm obsidian-plugins-portal \
+  ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 assets/audio/scene_01.mp3
+
+# 出力例: 4.238125 -> 4.2秒 (操作スクリプトの delay 計算基準として固定)
+```
 
 ---
 
