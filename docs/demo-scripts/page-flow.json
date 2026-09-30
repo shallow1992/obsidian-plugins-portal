@@ -1,0 +1,60 @@
+{
+  "project": "obsidian-page-flow",
+  "title": "Obsidian Page Flow Demo Showcase",
+  "version": "1.0.0",
+  "total_target_duration_sec": 23.5,
+  "scenes": [
+    {
+      "id": "scene_01",
+      "name": "Hook",
+      "target_duration_sec": 4.5,
+      "audio": {
+        "ja": "Obsidianでノートを読むとき、いちいちサイドバーをクリックしていませんか？",
+        "en": "Still clicking the sidebar every time you finish reading a note in Obsidian?"
+      },
+      "visual": {
+        "action": "Scroll to bottom of note, hit boundary, hesitate towards file explorer",
+        "hud_overlay": "Highlight file explorer"
+      }
+    },
+    {
+      "id": "scene_02",
+      "name": "Core Flow",
+      "target_duration_sec": 7.5,
+      "audio": {
+        "ja": "Page Flowなら、スペースキーを叩くだけ。ノートの末尾に到達すると、流れるように次のファイルへ滑空します。",
+        "en": "With Page Flow, just hit Space. Once you reach the bottom, glide effortlessly into the next file."
+      },
+      "visual": {
+        "action": "Hit Space key, smooth scroll, glide seamlessly across note boundary to next note",
+        "hud_overlay": "Space key badge popup, smooth zoom"
+      }
+    },
+    {
+      "id": "scene_03",
+      "name": "Control and Safety",
+      "target_duration_sec": 6.5,
+      "audio": {
+        "ja": "戻りたい時は Shift とスペース。いつでも矢印キーでピタッと急ブレーキ。",
+        "en": "Need to go back? Press Shift + Space. And hit the arrow keys anytime for instant braking."
+      },
+      "visual": {
+        "action": "Hit Shift+Space to reverse glide, then hit Up Arrow to brake instantly",
+        "hud_overlay": "Shift+Space badge, Brake indicator"
+      }
+    },
+    {
+      "id": "scene_04",
+      "name": "Outro and CTA",
+      "target_duration_sec": 5.0,
+      "audio": {
+        "ja": "キーボードだけで思考を止めない読書体験を。Page Flow、Obsidian コミュニティプラグインで今すぐ。",
+        "en": "Never break your train of thought. Page Flow — available now on Obsidian Community Plugins."
+      },
+      "visual": {
+        "action": "Show Community Plugins install screen, fade to portal banner and keybindings card",
+        "hud_overlay": "Install CTA highlight, Logo"
+      }
+    }
+  ]
+}
