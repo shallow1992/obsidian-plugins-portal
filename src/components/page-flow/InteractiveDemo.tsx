@@ -17,7 +17,7 @@ export default function InteractiveDemo({ dict }: InteractiveDemoProps) {
   const notes = dict.notes;
   const currentNote = notes[currentNoteIndex] || notes[0];
 
-  const handleForward = () => {
+  const handleForward = React.useCallback(() => {
     setLastKeyPressed("Space (Forward)");
     setConsecutiveTaps((prev) => Math.min(prev + 1, 5));
 
@@ -40,9 +40,9 @@ export default function InteractiveDemo({ dict }: InteractiveDemoProps) {
         });
       }
     }
-  };
+  }, [currentNoteIndex, notes.length]);
 
-  const handleBackward = () => {
+  const handleBackward = React.useCallback(() => {
     setLastKeyPressed("Shift+Space (Backward)");
     setConsecutiveTaps(1);
 
@@ -69,7 +69,7 @@ export default function InteractiveDemo({ dict }: InteractiveDemoProps) {
         });
       }
     }
-  };
+  }, [currentNoteIndex]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -87,7 +87,7 @@ export default function InteractiveDemo({ dict }: InteractiveDemoProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentNoteIndex, notes.length]);
+  }, [handleBackward, handleForward]);
 
   return (
     <div className="w-full max-w-4xl mx-auto rounded-2xl glass-panel border border-zinc-800 shadow-2xl overflow-hidden text-left">
