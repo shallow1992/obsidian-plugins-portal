@@ -208,7 +208,7 @@ export const en: Dictionary = {
   },
   footer: {
     tagline: "© 2026 Obsidian Plugins Suite. Crafted for seamless note-taking.",
-    allPlugins: "All Plugins",
+    home: "Home",
     github: "GitHub",
     obsidian: "Obsidian.md"
   }

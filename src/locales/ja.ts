@@ -208,7 +208,7 @@ export const ja: Dictionary = {
   },
   footer: {
     tagline: "© 2026 Obsidian Plugins Suite. 思考を深めるノート体験のために。",
-    allPlugins: "全プラグイン一覧",
+    home: "ホーム",
     github: "GitHub",
     obsidian: "Obsidian.md"
   }

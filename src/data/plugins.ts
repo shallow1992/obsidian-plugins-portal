@@ -49,7 +49,8 @@ export const PLUGINS_DATA: PluginMeta[] = [
     categoryJa: "メンテナンス",
     status: "Stable",
     badgeColor: "bg-emerald-600/20 text-emerald-300 border-emerald-500/40",
-    hasDedicatedLandingPage: false,
+    hasDedicatedLandingPage: true,
+    landingPageUrl: "/plugins/vault-pruner",
     obsidianInstallUri: "obsidian://show-plugin?id=obsidian-vault-pruner",
     githubUrl: "https://github.com/HirotakaAsako/obsidian-vault-pruner",
     highlights: ["Orphan Detection", "Safe Dry-run", "Attachment Cleaner"]
@@ -67,7 +68,8 @@ export const PLUGINS_DATA: PluginMeta[] = [
     categoryJa: "クイック記録",
     status: "Stable",
     badgeColor: "bg-blue-600/20 text-blue-300 border-blue-500/40",
-    hasDedicatedLandingPage: false,
+    hasDedicatedLandingPage: true,
+    landingPageUrl: "/plugins/chat-notes",
     obsidianInstallUri: "obsidian://show-plugin?id=obsidian-chat-notes",
     githubUrl: "https://github.com/HirotakaAsako/obsidian-chat-notes",
     highlights: ["Micro Journaling", "Timestamp Bubbles", "Instant Stream"]
@@ -85,7 +87,8 @@ export const PLUGINS_DATA: PluginMeta[] = [
     categoryJa: "ユーティリティ",
     status: "Stable",
     badgeColor: "bg-amber-600/20 text-amber-300 border-amber-500/40",
-    hasDedicatedLandingPage: false,
+    hasDedicatedLandingPage: true,
+    landingPageUrl: "/plugins/format-convert",
     obsidianInstallUri: "obsidian://show-plugin?id=obsidian-format-convert",
     githubUrl: "https://github.com/HirotakaAsako/obsidian-format-convert",
     highlights: ["Batch Conversion", "Clean RegEx Engine", "HTML to MD"]
@@ -103,7 +106,8 @@ export const PLUGINS_DATA: PluginMeta[] = [
     categoryJa: "同期・バックアップ",
     status: "Stable",
     badgeColor: "bg-indigo-600/20 text-indigo-300 border-indigo-500/40",
-    hasDedicatedLandingPage: false,
+    hasDedicatedLandingPage: true,
+    landingPageUrl: "/plugins/google-drive-sync",
     obsidianInstallUri: "obsidian://show-plugin?id=obsidian-google-drive-sync",
     githubUrl: "https://github.com/HirotakaAsako/obsidian-google-drive-sync",
     highlights: ["Zero Server", "OAuth2 Encrypted", "Selective Folder Sync"]
