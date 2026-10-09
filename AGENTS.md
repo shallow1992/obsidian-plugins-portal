@@ -25,34 +25,47 @@ The portal is designed as a fast, accessible, multilingual static showcase:
   - Zero Node.js runtime servers in production (compatible with Cloudflare Pages and GitHub Pages).
 - **Path-Based Multilingual Routing (`/[lang]/...`)**:
   - Languages supported: English (`/en/...`) and Japanese (`/ja/...`).
-  - Implements static dictionary lookup with strict TypeScript type safety (`src/i18n/dictionaries.ts`).
+  - Implements static dictionary lookup with strict TypeScript type safety (`src/locales/`).
   - Root `/` automatically detects and performs client-side redirect to default locale (`/en`).
 
 ---
 
-## 3. Git Worktree & Multi-Agent Isolation Workflow
+## 3. Mandatory Specification Pointers (Documentation Hierarchy)
+
+To guarantee visual, architectural, and workflow consistency, agents **MUST** inspect and comply with the following domain specifications before executing tasks:
+
+| Task Domain | Mandatory Specification Pointer | Purpose & Requirements |
+| :--- | :--- | :--- |
+| **UI Design, Styling & Component Refactoring** | **[`docs/design.md`](./docs/design.md)** | **Strict Design System Compliance**: Canvas `#09090b`, glassmorphism (`.glass-panel`), typography scales, purple gradient tokens, `<kbd>` styling, and scaffolding templates. Zero arbitrary styles, zero pure black `#000000` canvas, zero hardcoded UI strings. |
+| **New Plugin Onboarding & Dedicated LPs** | **[`docs/plugins-expansion-guide.md`](./docs/plugins-expansion-guide.md)** | **Standard Multi-Plugin Workflow**: Step-by-step procedure for Level 1 (catalog registry) and Level 2 (full showcase LP) with bilingual metadata synchronization. |
+| **Demo Video Automation & Asset Pipeline** | **[`docs/video-production-pipeline.md`](./docs/video-production-pipeline.md)** | **Audio-First Sync Pipeline**: Scene-split video capture, AppleScript automation, ElevenLabs voice, and Docker ffmpeg compression to `public/assets/plugins/<id>/`. |
+| **System Architecture & Tech Stack Rationale** | **[`docs/architecture.md`](./docs/architecture.md)** | **Architectural Blueprint**: In-depth trade-off analyses, container isolation guarantees, and Agent Skills system. |
+
+---
+
+## 4. Git Worktree & Multi-Agent Isolation Workflow
 
 To safely coordinate multiple AI agents operating in the same repository:
 - **1 Issue = 1 Branch = 1 Worktree Isolation**:
   - Never perform parallel feature work directly on `master`.
 - **Namespace Separation**:
   - **Claude Code**: `<repo>/.claude/worktrees/issue-<number>-<short-desc>/`
-  - **Antigravity**: `<repo>/.gemini/.worktrees/issue-<number>-<short-desc>/`
+  - **Antigravity**: `<repo>/.gemini/worktrees/issue-<number>-<short-desc>/`
 - **Creation from Fresh Base**:
   ```bash
   # Example for Antigravity:
-  git worktree add -b issue-<num>-<desc> .gemini/.worktrees/issue-<num>-<desc> origin/master
+  git worktree add -b issue-<num>-<desc> .gemini/worktrees/issue-<num>-<desc> origin/master
   ```
 - **Post-Merge Cleanup Protocol**:
   1. Tear down container volumes: `docker compose down -v`
   2. Pull latest master: `git pull --ff-only`
-  3. Remove worktree: `git worktree remove .gemini/.worktrees/issue-<num>-<desc>`
+  3. Remove worktree: `git worktree remove .gemini/worktrees/issue-<num>-<desc>`
   4. Delete local branch: `git branch -d issue-<num>-<desc>`
   5. Prune remote tracking: `git fetch --prune`
 
 ---
 
-## 4. Conventional Commits & Remote CI Verification
+## 5. Conventional Commits & Remote CI Verification
 
 - **Commit Message Format**:
   - Commits and PR titles must adhere to Conventional Commits:
@@ -69,7 +82,7 @@ To safely coordinate multiple AI agents operating in the same repository:
 
 ---
 
-## 5. Security & Privacy (Zero Leak Policy)
+## 6. Security & Privacy (Zero Leak Policy)
 
 - **Zero Plaintext Secrets**: No tokens, API keys, or private credentials committed to git.
 - **Zero Host Environment Leaks**: Never commit machine names, OS usernames, local absolute paths (`/Users/...`), or personal email addresses.
