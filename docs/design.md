@@ -1,48 +1,62 @@
-# Design System & Guidelines (design.md)
+# Design System & Engineering Guidelines (design.md)
 
 本ドキュメントは、**Obsidian Plugins Portal** および配下の個別プラグインランディングページ（LP）における、ビジュアルデザイン、レイアウト、タイポグラフィ、UIコンポーネント、インタラクションの一貫性を担保するための公式デザインシステム仕様書です。
 
-人間デザイナー・エンジニアおよび AI エージェント（`web-portal-builder`, `accessibility-ui-auditor` 等）が、既存ページと同等の品質と世界観を維持したまま、新規ページの追加や既存コンポーネントの改善を行えるよう、厳密なルールと具体的な実装パターンを定義しています。
+人間デザイナー・エンジニアおよび AI エージェント（`web-portal-builder`, `accessibility-ui-auditor` 等）が、既存ページと同等のハイエンドな質感・設計思想を維持したまま、新規ページの追加や既存コンポーネントの改善を行えるよう、厳密なトークン定義、コピペ可能な実装テンプレート、アンチパターン、レビューチェックリストを網羅しています。
 
 ---
 
 ## 1. デザインフィロソフィー (Design Philosophy)
 
-本サイトのデザインは、**Notebook Navigator** や **Linear**, **Apple Developer** をベンチマークとし、以下の基本原則に基づいています。
+本サイトのデザインは、**Notebook Navigator** や **Linear**, **Apple Developer** をベンチマークとし、以下の 4 原則に基づいています。
 
 1. **Obsidian-Native Dark Theme**:
-   - 暗黒色（`#09090b`）を基調とし、純黒（`#000000`）の重さを避けつつ、Obsidian のデフォルトダークテーマとシームレスに調和する空間を構築します。
-2. **Glassmorphism & Depth (深さと質感)**:
-   - 単調なフラットデザインではなく、半透明のパネル背景、繊細な境界線（1px border）、背後の微弱なラジアルグロー（紫〜インディゴ）により、奥行きとハイエンドな質感を表現します。
-3. **Keyboard & Developer First**:
-   - キーボードバッジ（`<kbd>`）、等幅フォント（`font-mono`）、コード・ターミナルライクなインジケーターを適切に配置し、開発者・パワーユーザーの審美眼に耐えうる意匠にします。
+   - ベースキャンバスは `#09090b`（亜鉛色ディープダーク）。純黒（`#000000`）の過度な重さやコントラスト疲労を避け、Obsidian のデフォルトダークテーマとシームレスに調和する視覚空間を構築します。
+2. **Glassmorphism & Optical Depth (光学的な深みと質感)**:
+   - 単調なフラットデザインを廃し、半透明のパネル背景（`rgba(24, 24, 27, 0.65)`）、繊細な境界線（`border border-zinc-800` / `border-white/10`）、背後の微弱なラジアルグロー（紫〜インディゴ）により、階層と奥行きを表現します。
+3. **Keyboard & Developer First (道具としての佇まい)**:
+   - キーボードバッジ（`<kbd>`）、等幅フォント（`font-mono`）、コード・ターミナルライクなインジケーターを要所に配置し、思考を邪魔しない道具感を体現します。
 4. **Interactive Tactility (触感の提示)**:
-   - 静的な説明にとどまらず、ブラウザ上で実際にキーを押して体験できるインタラクティブシミュレータや、実機動画プレビューをファーストビュー直下に配置し、製品の手応えを即座に伝えます。
+   - スクリーンショットのみの説明にとどまらず、ブラウザ上でキーを押して体験できるインタラクティブシミュレータや、実機動画プレビューをファーストビュー直下に配置し、製品の「手応え」を即座に伝えます。
 
 ---
 
-## 2. カラーパレット & トークン規約 (Color Palette & Tokens)
+## 2. カラートークン & サーフェス規約 (Color Tokens & Surfaces)
 
 Tailwind CSS のトークンおよびユーティリティクラスを以下のように標準化します。
 
-### 2.1 背景 & サーフェス (Background & Surface)
+### 2.1 背景 & レイヤー階層 (Background & Layering)
 
-| トークン名 | カラーコード / クラス | 用途 |
+```text
+[Layer 0: Canvas Base]        #09090b (Tailwind: bg-[#09090b])
+    ↓
+[Layer -1: Ambient Glow]      bg-purple-600/20 blur-[140px] (絶対配置 -z-10, pointer-events-none)
+    ↓
+[Layer 1: Glass Panels]       .glass-panel (rgba(24,24,27,0.65) + backdrop-blur-md + border-white/10)
+    ↓
+[Layer 2: Surface Inset/Deck] #0c0c0e (bg-[#0c0c0e] エディタ内枠・動画プレイヤー領域)
+    ↓
+[Layer 3: UI Controls & Dock] bg-zinc-900/90 (border-b border-zinc-800 ウィンドウヘッダー・操作ドック)
+```
+
+| トークン名 | カラーコード / クラス | 主な用途 |
 | :--- | :--- | :--- |
-| **Canvas Background** | `#09090b` (`bg-[#09090b]` または `bg-zinc-950`) | ページ全体のベース背景 |
+| **Canvas Background** | `#09090b` (`bg-[#09090b]`) | ページ全体の最背面 |
 | **Glass Panel** | `rgba(24, 24, 27, 0.65)` (`.glass-panel`) | 主要カード、Bento Grid、モーダル、ヘッダー |
 | **Glass Panel Hover** | `rgba(39, 39, 42, 0.65)` (`.glass-panel-hover`) | カードホバー時の背景浮き上がり |
 | **Mock Editor Background** | `#0c0c0e` (`bg-[#0c0c0e]`) | シミュレータ・動画枠内部のエディタ再現領域 |
 | **Dock / Header Bar** | `bg-zinc-900/90` | ウィンドウ風UIのタイトルバー、下部ドック |
+| **Pill Inset Surface** | `bg-zinc-950/60` | 数値・タグ・ステータス表示のインセット背景 |
 
 ### 2.2 アクセント & ブランドカラー (Accents & Brand)
 
 | 用途 | クラス | スタイル |
 | :--- | :--- | :--- |
-| **プライマリグラデーション** | `.text-gradient-purple` | `linear-gradient(135deg, #c084fc 0%, #7c3aed 100%)`（見出しのハイライト単語） |
+| **見出しグラデーション** | `.text-gradient-purple` | `linear-gradient(135deg, #c084fc 0%, #7c3aed 100%)` |
+| **本文グラデーション** | `.text-gradient` | `linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%)` |
 | **プライマリボタン (CTA)** | `bg-purple-600 hover:bg-purple-500` | シャドウ: `shadow-xl shadow-purple-600/30 hover:shadow-purple-600/40` |
 | **セカンダリボタン** | `bg-zinc-900/90 hover:bg-zinc-800` | 境界線: `border border-zinc-700/80 text-zinc-200` |
-| **環境光グロー (Radial Glow)** | `bg-purple-600/20 blur-[140px]` | セクション背景の光彩（絶対配置 `-z-10`、`pointer-events-none`） |
+| **環境光グロー (Radial Glow)** | `bg-purple-600/20 blur-[140px]` | セクション背景の光彩（幅800px・高さ450px） |
 
 ### 2.3 セマンティックステータスバッジ (Badges)
 
@@ -73,11 +87,29 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 
 ---
 
-## 4. コンポーネント設計パターン (Component Patterns)
+## 4. スペーシング & レイアウトグリッド (Spacing & Layout Grid)
+
+サイト全体の縦のリズムとコンテナ幅を厳格に揃えることで、複数ページを横断したときのブレを防止します。
+
+### 4.1 コンテナ幅規約
+- **ポータルトップ (`/[lang]`)**: `max-w-6xl mx-auto px-4 sm:px-6` (幅約 1152px)
+- **個別プラグインLP (`/[lang]/plugins/<id>`)**: `max-w-5xl mx-auto px-4 sm:px-6` (幅約 1024px)
+- **Hero & CTA テキストブロック**: `max-w-3xl mx-auto` または `max-w-2xl mx-auto` (読みやすい行長に制限)
+
+### 4.2 セクション間余白 (Vertical Rhythm)
+- **Hero セクション**: `pt-12 pb-20` (ファーストビューのまとまり)
+- **中間セクション (BentoGrid, Hotkeys, Settings)**: `py-20`
+- **コンポーネント内余白**:
+  - カード内パディング: `p-6 sm:p-8` (小カード) / `p-8 sm:p-10` (大カード)
+  - 要素間ギャップ: `space-y-4` (標準ブロック) / `space-y-8` (セクションヘッダーとコンテンツ間)
+
+---
+
+## 5. コンポーネント設計パターン (Component Recipes)
 
 新規コンポーネントを作成する際は、以下の構造パターンに従ってください。
 
-### 4.1 ピル型バッジ (Pill Badge)
+### 5.1 ピル型バッジ (Pill Badge)
 セクション冒頭やHero上部に配置するマイクロバッジ：
 ```tsx
 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/70 border border-purple-800/60 text-xs font-medium text-purple-300 shadow-inner">
@@ -86,7 +118,7 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 </div>
 ```
 
-### 4.2 アクションボタン (CTA Buttons)
+### 5.2 アクションボタン (CTA Buttons)
 主要CTA（Obsidian直接インストール）およびセカンダリCTA（GitHub）：
 ```tsx
 {/* プライマリ: Obsidian インストール */}
@@ -110,7 +142,7 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 </a>
 ```
 
-### 4.3 モックウィンドウフレーム (Mock Window Frame)
+### 5.3 モックウィンドウフレーム (Mock Window Frame)
 シミュレータ、デモ動画、コードブロックを囲む macOS / Obsidian 風のウィンドウ枠：
 ```tsx
 <div className="w-full max-w-4xl mx-auto rounded-2xl glass-panel border border-zinc-800 shadow-2xl overflow-hidden text-left">
@@ -125,7 +157,7 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
       </span>
     </div>
     {/* 右側インジケーター */}
-    <div className="text-[11px] font-mono text-purple-300">
+    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-900/40 border border-purple-700/50 text-[11px] font-mono text-purple-300">
       Status Indicator
     </div>
   </div>
@@ -137,7 +169,7 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 </div>
 ```
 
-### 4.4 Bento Grid (機能紹介グリッド)
+### 5.4 Bento Grid (機能紹介グリッド)
 3カラム構成を基準とし、重要機能は `md:col-span-2` でワイド表示します：
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -173,7 +205,7 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 </div>
 ```
 
-### 4.5 キーボードバッジ (`<kbd>`)
+### 5.5 キーボードバッジ (`<kbd>`)
 ホットキー表や操作説明で使用するキーボード打鍵表現：
 ```tsx
 <kbd className="px-2.5 py-1 rounded-md bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono text-xs shadow-sm inline-block">
@@ -183,7 +215,7 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 
 ---
 
-## 5. 新規ページ・LP追加時のレイアウト構造規約
+## 6. 新規プラグイン個別LPの標準セクション構造規約
 
 新しいプラグインの専用LP（`src/app/[lang]/plugins/<plugin-id>/page.tsx`）を作成する場合、以下の**標準セクション順序**を踏襲してください：
 
@@ -196,11 +228,11 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
    - メタデータタグ行 (対応バージョン、特徴等)
    - 実機ショーケース (動画プレビュー ＆ インタラクティブシミュレータのタブ切替)
 3. Bento Grid Section:
-   - 4つの柱となるコア機能・設計思想カード
+   - 4つの柱となるコア機能・設計思想カード (2カラムワイド ＋ 1カラム通常 × 2)
 4. Hotkey Matrix Section (該当時):
    - キーバインド一覧テーブル (デフォルト vs Vimスタイル等)
 5. Settings / Deep Dive Section:
-   - 詳細設定・チューニング項目のウォークスルー
+   - 詳細設定・チューニング項目のウォークスルー (3カラムカード)
 6. Bottom CTA Section:
    - インストールへのリマインドと背景グラデーション
 7. Footer (サイト共通)
@@ -208,7 +240,75 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 
 ---
 
-## 6. 国際化 (i18n) & テキスト品質ルール
+## 7. 新規プラグイン個別LP スキャフォールディング雛形 (Scaffolding Template)
+
+AI エージェントまたは開発者が新しいプラグイン専用LP（例: `vault-pruner`）を即座に作成できるように、完成形の雛形テンプレートを提供します。
+
+### 7.1 View コンテナ雛形 (`src/components/<plugin-id>/<PluginId>View.tsx`)
+```tsx
+import React from "react";
+import Hero from "@/components/<plugin-id>/Hero";
+import BentoGrid from "@/components/<plugin-id>/BentoGrid";
+import BottomCTA from "@/components/<plugin-id>/BottomCTA";
+import { Locale, Dictionary } from "@/locales";
+
+interface Props {
+  lang: Locale;
+  dict: Dictionary;
+}
+
+export default function PluginView({ lang, dict }: Props) {
+  return (
+    <div className="space-y-4">
+      <Hero dict={dict.<pluginId>} commonDict={dict.common} />
+      <BentoGrid dict={dict.<pluginId>.bento} />
+      <BottomCTA dict={dict.<pluginId>.cta} />
+    </div>
+  );
+}
+```
+
+### 7.2 App Router ページ雛形 (`src/app/[lang]/plugins/<plugin-id>/page.tsx`)
+```tsx
+import type { Metadata } from "next";
+import { getDictionary, LOCALES, Locale } from "@/locales";
+import PluginView from "@/components/<plugin-id>/<PluginId>View";
+
+export function generateStaticParams() {
+  return LOCALES.map((l) => ({ lang: l.code }));
+}
+
+interface PageProps {
+  params: { lang: string };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const lang = (params.lang === "ja" ? "ja" : "en") as Locale;
+  const dict = getDictionary(lang);
+
+  return {
+    title: `${dict.<pluginId>.hero.title} | Obsidian Community Plugin`,
+    description: dict.<pluginId>.hero.subtitle,
+    alternates: {
+      languages: {
+        en: `/en/plugins/<plugin-id>/`,
+        ja: `/ja/plugins/<plugin-id>/`,
+      },
+    },
+  };
+}
+
+export default function PluginLandingPage({ params }: PageProps) {
+  const lang = (params.lang === "ja" ? "ja" : "en") as Locale;
+  const dict = getDictionary(lang);
+
+  return <PluginView lang={lang} dict={dict} />;
+}
+```
+
+---
+
+## 8. 国際化 (i18n) & テキスト品質ルール
 
 1. **完全辞書化の原則**:
    - UI内のすべての表示テキスト（ボタン名、タグ、説明、テーブルヘッダー、プレースホルダー）は、ハードコードを禁止し、`src/locales/`（`en.ts` および `ja.ts`）に定義します。
@@ -220,18 +320,38 @@ Tailwind CSS のトークンおよびユーティリティクラスを以下の�
 
 ---
 
-## 7. アクセシビリティ & レスポンシブ検証チェックリスト
+## 9. アンチパターン集 (Design Anti-Patterns: これをやってはいけない)
 
-新しいページやコンポーネントをコミットする前に、以下の項目を点検してください：
+デザイン破綻を未然に防ぐため、以下の実装を禁止します：
 
-- [ ] **カラーコントラスト**:
-  - `bg-[#09090b]` 上の本文テキストは最低限 `text-zinc-400`（コントラスト比 4.5:1 以上）を確保すること。`text-zinc-600` 以下は装飾メタデータやボーダーにのみ使用。
-- [ ] **フォーカス & キーボード操作**:
-  - シミュレータのキーボードイベントは `input`, `textarea` フォーカス中には発火しないようガードすること（`tagName !== "INPUT"`）。
-  - すべてのインタラクティブ要素（ボタン、リンク）はキーボード Tab キーで到達可能であること。
-- [ ] **レスポンシブ崩れ防止**:
-  - モバイル画面（幅 375px〜）において、Bento Grid が 1 カラムに折り返され、横スクロール（Horizontal Overflow）が発生しないこと。
-  - テーブルは `overflow-x-auto` でラップされていること。
-- [ ] **モーション & パフォーマンス**:
-  - ボタンのアクティブ状態に `active:scale-95 transition-all` を付与し、小気味よいクリックフィードバックを提供すること。
-  - 重いアニメーションは避け、CSS による軽量なトランジション（`transition-colors`, `transition-all`）で完結させること。
+- ❌ **純黒 `#000000` を背景ベタ塗りすること**:
+  - 必ず `#09090b` または `.glass-panel` を使用してください。純黒はコントラストが強すぎて視覚疲労を引き起こします。
+- ❌ **低コントラストなテキスト色 (`text-zinc-600` 以下) を本文に使うこと**:
+  - 暗色背景上での可読性を担保するため、本文は `text-zinc-300` または `text-zinc-400` を使用してください。
+- ❌ **派手すぎるマルチカラーの乱用**:
+  - 主調色はパープル〜インディゴ（`purple-600` / `indigo-600`）。アクセントとしてのアンバー（注意・モメンタム）やエメラルド（安全性）は要所（1カード1色）に限定してください。
+- ❌ **コンポーネント内への文言ハードコード**:
+  - 例: `<span>Install in Obsidian</span>` と直書きせず、必ず `dict.installInObsidian` を参照してください。
+- ❌ **ホスト依存の重いライブラリの追加**:
+  - 静的エクスポート (`output: 'export'`) との互換性がないサーバーサイドライブラリや過剰なアニメーションライブラリ（Framer Motion の過度な利用等）は導入せず、Tailwind CSS の `transition-all` や CSS アニメーションを優先してください。
+
+---
+
+## 10. エージェント向け品質検証チェックリスト (Design PR Checklist)
+
+新しいページやコンポーネントを追加・修正した際、AI エージェントおよび開発者は以下のチェックをパスする必要があります：
+
+- [ ] **ビジュアル & カラートークン**:
+  - 背景、パネル、ボーダーが `.glass-panel` および指定トークンに準拠しているか。
+  - セクション上部に環境光（Radial Glow）が配置されているか。
+- [ ] **タイポグラフィ & コントラスト**:
+  - H1 に `.text-gradient-purple` が適用されているか。
+  - 本文テキストのコントラスト比が 4.5:1 以上（`text-zinc-400` 以上）を確保しているか。
+- [ ] **インタラクション & a11y**:
+  - すべてのボタン・リンクに `active:scale-95 transition-all` が設定されているか。
+  - インタラクティブ要素（キーボードシミュレータ）のイベント発火時、`input`/`textarea` 入力中が除外されているか。
+- [ ] **多言語 (i18n) 整合性**:
+  - 画面内の全テキストが `src/locales/` に定義され、`types.ts`、`en.ts`、`ja.ts` が 100% 同期しているか。
+- [ ] **Docker 隔離 & ビルド検証**:
+  - `docker compose run --rm obsidian-plugins-portal npm run lint` が 0 errors / 0 warnings であるか。
+  - `docker compose run --rm obsidian-plugins-portal npm run build` が静的エクスポート (`out/`) を正常生成できるか。
