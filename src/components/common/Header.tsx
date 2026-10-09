@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Sparkles, Compass, Layers } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import LanguageSelector from "@/components/ui/LanguageSelector";
 import { Locale, Dictionary } from "@/locales";
 
@@ -11,7 +11,6 @@ interface HeaderProps {
 
 export default function Header({ lang, dict }: HeaderProps) {
   const homePath = `/${lang}`;
-  const pageFlowPath = `/${lang}/plugins/page-flow`;
 
   return (
     <header className="sticky top-0 z-50 glass-panel border-b border-zinc-800/80">
@@ -26,23 +25,16 @@ export default function Header({ lang, dict }: HeaderProps) {
           <span className="text-zinc-100">{dict.suiteTitle}</span>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <nav className="flex items-center gap-5 text-sm font-medium text-zinc-400">
-            <Link
-              href={pageFlowPath}
-              className="hover:text-zinc-100 transition-colors flex items-center gap-1.5"
-            >
-              <Compass className="w-4 h-4 text-purple-400" />
-              <span>{dict.pageFlow}</span>
-            </Link>
-            <Link
-              href={homePath}
-              className="hover:text-zinc-100 transition-colors flex items-center gap-1.5 hidden sm:flex"
-            >
-              <Layers className="w-4 h-4" />
-              <span>{dict.allPlugins}</span>
-            </Link>
-          </nav>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://github.com/shallow1992/obsidian-plugins-portal"
+            target="_blank"
+            rel="noreferrer"
+            className="text-zinc-400 hover:text-zinc-100 transition-colors text-sm font-medium hidden sm:flex items-center gap-1.5"
+            aria-label="GitHub Repository"
+          >
+            <span>GitHub</span>
+          </a>
 
           {/* Language Selector */}
           <LanguageSelector currentLang={lang} />

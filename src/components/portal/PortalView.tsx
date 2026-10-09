@@ -56,9 +56,12 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
 
           <div className="glass-panel rounded-2xl p-6 sm:p-10 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300 shadow-2xl">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-              <div className="space-y-4 max-w-2xl">
+              <Link
+                href={pageFlowPath}
+                className="space-y-4 max-w-2xl block text-left group-hover:cursor-pointer flex-1"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
+                  <div className="w-12 h-12 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
                     <Compass className="w-7 h-7" />
                   </div>
                   <div>
@@ -90,9 +93,9 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Link>
 
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 relative z-10">
                 <Link
                   href={pageFlowPath}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all shadow-xl shadow-purple-600/25 active:scale-95"
@@ -127,19 +130,19 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
             {otherPlugins.map((plugin) => (
               <div
                 key={plugin.id}
-                className="glass-panel p-6 sm:p-7 rounded-2xl border border-zinc-800 flex flex-col justify-between hover:border-zinc-700 transition-all group"
+                className="glass-panel p-6 sm:p-7 rounded-2xl border border-zinc-800/90 flex flex-col justify-between transition-all"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-zinc-300">
                       {lang === "ja" ? plugin.categoryJa : plugin.category}
                     </span>
-                    <span className="text-[11px] font-mono text-zinc-500">
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
                       {plugin.status}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                  <h3 className="text-xl font-bold text-white">
                     {plugin.name}
                   </h3>
                   <p className="text-xs font-medium text-purple-400">

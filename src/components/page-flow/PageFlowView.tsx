@@ -27,7 +27,7 @@ export default function PageFlowView({ lang, dict }: PageFlowViewProps) {
       <SettingsWalkthrough dict={dict.pageFlow.settings} />
 
       {/* 5. Bottom Installation CTA */}
-      <BottomCTA dict={dict.pageFlow.cta} />
+      <BottomCTA lang={lang} dict={dict.pageFlow.cta} />
     </div>
   );
 }
