@@ -133,6 +133,7 @@ docker compose down
 ## 📚 Governance & Guidelines
 
 - **AI Agent Guidelines**: See [`AGENTS.md`](AGENTS.md) for architectural constraints, multi-agent worktree protocols, and security rules.
+- **Design System & Guidelines**: See [`docs/design.md`](docs/design.md) for visual rules, color tokens, typography, and component patterns.
 - **Architecture & Tech Stack Rationale**: See [`docs/architecture.md`](docs/architecture.md) for detailed tool selection, agent skills matrix, and multi-plugin design.
 - **Plugin LP Expansion Guide**: See [`docs/plugins-expansion-guide.md`](docs/plugins-expansion-guide.md) for step-by-step instructions on onboarding new plugins and creating dedicated landing pages.
 - **Video Production Pipeline**: See [`docs/video-production-pipeline.md`](docs/video-production-pipeline.md) for the audio-first screen recording and editing pipeline.
