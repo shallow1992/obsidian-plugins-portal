@@ -1,12 +1,14 @@
 import React from "react";
-import { Download, Github, Sparkles } from "lucide-react";
-import { Dictionary } from "@/locales";
+import Link from "next/link";
+import { Download, Github, Sparkles, ArrowLeft } from "lucide-react";
+import { Dictionary, Locale } from "@/locales";
 
 interface BottomCTAProps {
+  lang: Locale;
   dict: Dictionary["pageFlow"]["cta"];
 }
 
-export default function BottomCTA({ dict }: BottomCTAProps) {
+export default function BottomCTA({ lang, dict }: BottomCTAProps) {
   return (
     <section className="py-20 relative overflow-hidden text-center">
       {/* Background Glow */}
@@ -44,7 +46,19 @@ export default function BottomCTA({ dict }: BottomCTAProps) {
             <Github className="w-4 h-4 text-zinc-400" />
             <span>{dict.githubButton}</span>
           </a>
+
+          <Link
+            href={`/${lang}`}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900/50 hover:bg-zinc-900 text-zinc-300 border border-zinc-800 text-sm font-semibold transition-all active:scale-95"
+          >
+            <ArrowLeft className="w-4 h-4 text-zinc-400" />
+            <span>{dict.backToPortal}</span>
+          </Link>
         </div>
+
+        <p className="text-xs text-zinc-500 max-w-lg mx-auto pt-2">
+          {dict.manualInstallHint}
+        </p>
       </div>
     </section>
   );

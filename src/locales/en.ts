@@ -201,7 +201,9 @@ export const en: Dictionary = {
       title: "Ready to glide through your notes?",
       desc: "Install Page Flow directly inside Obsidian in seconds. Free, open source, and engineered to respect your local vault.",
       installButton: "Install in Obsidian",
-      githubButton: "GitHub Repository"
+      githubButton: "GitHub Repository",
+      backToPortal: "Back to All Plugins",
+      manualInstallHint: "* If the direct link does not launch Obsidian, search for 'Page Flow' under Settings > Community plugins."
     }
   },
   footer: {

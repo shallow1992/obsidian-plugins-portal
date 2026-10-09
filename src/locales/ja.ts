@@ -201,7 +201,9 @@ export const ja: Dictionary = {
       title: "ノートを滑空する体験を、今日から。",
       desc: "Obsidian のコミュニティプラグイン設定から直接インストール可能。完全無料、オープンソース、Vault 完全ローカル設計です。",
       installButton: "Obsidian でインストール",
-      githubButton: "GitHub リポジトリ"
+      githubButton: "GitHub リポジトリ",
+      backToPortal: "全プラグイン一覧に戻る",
+      manualInstallHint: "※ ブラウザから起動しない場合は、Obsidian 設定 > コミュニティプラグイン > 有効化・検索から「Page Flow」を検索してインストールできます。"
     }
   },
   footer: {

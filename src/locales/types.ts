@@ -130,6 +130,8 @@ export interface Dictionary {
       desc: string;
       installButton: string;
       githubButton: string;
+      backToPortal: string;
+      manualInstallHint: string;
     };
   };
   footer: {
