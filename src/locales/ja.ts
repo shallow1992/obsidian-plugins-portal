@@ -20,7 +20,7 @@ export const ja: Dictionary = {
     heroTitle: "洗練されたツールで、Obsidian Vault を",
     heroHighlight: "もっと心地よい体験へ",
     heroSubtitle:
-      "思考の流れを止めないキーボード中心の操作感、完全なオフライン＆プライバシー保護、深いObsidian統合を備えた、こだわりのプラグインコレクション。",
+      "妥協なきパフォーマンス、完全なオフライン＆プライバシー保護、Obsidian 本来の操作感に溶け込む親和性を備えた、こだわりのプラグインコレクション。",
     featuredBadge: "注目のリリース",
     exploreSuiteTitle: "プラグインスイート",
     exploreSuiteSubtitle: "開発された全プラグインを見る",
@@ -34,8 +34,8 @@ export const ja: Dictionary = {
       desc: "ノートデータはお手元のマシンから一切外に出ません。ローカル Vault の境界とプライバシーを厳格に保護。"
     },
     philosophy3: {
-      title: "キーボード・ファースト",
-      desc: "手をホームポジションに置いたまま、マウスに持ち替えることなく思考を深められる操作感を徹底追求。"
+      title: "Obsidian ネイティブな親和性",
+      desc: "複雑な独自UIや過度な設定を強要せず、Obsidian 本来の操作感とワークフローに自然に溶け込む拡張性を追求。"
     }
   },
   pageFlow: {
@@ -205,6 +205,9 @@ export const ja: Dictionary = {
     }
   },
   footer: {
-    tagline: "© 2026 Obsidian Plugins Suite. 思考を深めるノート体験のために。"
+    tagline: "© 2026 Obsidian Plugins Suite. 思考を深めるノート体験のために。",
+    allPlugins: "全プラグイン一覧",
+    github: "GitHub",
+    obsidian: "Obsidian.md"
   }
 };

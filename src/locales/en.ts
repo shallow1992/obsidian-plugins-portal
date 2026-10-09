@@ -20,7 +20,7 @@ export const en: Dictionary = {
     heroTitle: "Elevate your Obsidian vault with",
     heroHighlight: "precision tools",
     heroSubtitle:
-      "A curated suite of keyboard-optimized, privacy-first, and deeply integrated Obsidian plugins crafted to eliminate friction and keep your thoughts flowing.",
+      "A curated suite of high-performance, privacy-first, and natively integrated Obsidian plugins crafted to eliminate friction and keep your thoughts flowing.",
     featuredBadge: "Featured Release",
     exploreSuiteTitle: "Complete Plugin Suite",
     exploreSuiteSubtitle: "Explore All Crafted Plugins",
@@ -34,8 +34,8 @@ export const en: Dictionary = {
       desc: "Your notes never leave your personal computer. Every operation strictly respects your local vault boundaries."
     },
     philosophy3: {
-      title: "Keyboard Centric",
-      desc: "Designed from the ground up for power users who prefer to keep their hands firmly on the home row."
+      title: "Native & Frictionless Integration",
+      desc: "Designed to blend seamlessly into Obsidian without bloated configurations or workflow disruption. Always in flow, never in the way."
     }
   },
   pageFlow: {
@@ -205,6 +205,9 @@ export const en: Dictionary = {
     }
   },
   footer: {
-    tagline: "© 2026 Obsidian Plugins Suite. Crafted for seamless note-taking."
+    tagline: "© 2026 Obsidian Plugins Suite. Crafted for seamless note-taking.",
+    allPlugins: "All Plugins",
+    github: "GitHub",
+    obsidian: "Obsidian.md"
   }
 };

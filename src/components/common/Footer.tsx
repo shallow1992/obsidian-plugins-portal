@@ -14,18 +14,26 @@ export default function Footer({ lang, dict }: FooterProps) {
         <p>{dict.tagline}</p>
         <div className="flex items-center gap-6">
           <Link
-            href={`/${lang}/plugins/page-flow`}
+            href={`/${lang}`}
             className="hover:text-zinc-400 transition-colors"
           >
-            Page Flow
+            {dict.allPlugins}
           </Link>
+          <a
+            href="https://github.com/shallow1992/obsidian-plugins-portal"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-zinc-400 transition-colors"
+          >
+            {dict.github}
+          </a>
           <a
             href="https://obsidian.md"
             target="_blank"
             rel="noreferrer"
             className="hover:text-zinc-400 transition-colors"
           >
-            Obsidian.md
+            {dict.obsidian}
           </a>
         </div>
       </div>
