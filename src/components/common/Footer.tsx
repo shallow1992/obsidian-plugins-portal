@@ -17,7 +17,7 @@ export default function Footer({ lang, dict }: FooterProps) {
             href={`/${lang}`}
             className="hover:text-zinc-400 transition-colors"
           >
-            {dict.allPlugins}
+            {dict.home}
           </Link>
           <a
             href="https://github.com/shallow1992/obsidian-plugins-portal"

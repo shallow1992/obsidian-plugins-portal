@@ -136,7 +136,7 @@ export interface Dictionary {
   };
   footer: {
     tagline: string;
-    allPlugins: string;
+    home: string;
     github: string;
     obsidian: string;
   };

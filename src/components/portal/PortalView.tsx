@@ -45,21 +45,18 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
             <h2 className="text-xs uppercase font-bold tracking-widest text-purple-400">
               {portal.featuredBadge}
             </h2>
-            <Link
-              href={pageFlowPath}
-              className="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1"
-            >
-              <span>{common.interactiveShowcase}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
           </div>
 
           <div className="glass-panel rounded-2xl p-6 sm:p-10 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300 shadow-2xl">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-              <Link
-                href={pageFlowPath}
-                className="space-y-4 max-w-2xl block text-left group-hover:cursor-pointer flex-1"
-              >
+            {/* Full-card overlay link */}
+            <Link
+              href={pageFlowPath}
+              className="absolute inset-0 z-0"
+              aria-label={featuredPlugin.name}
+            />
+
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8 pointer-events-none">
+              <div className="space-y-4 max-w-2xl text-left flex-1">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
                     <Compass className="w-7 h-7" />
@@ -93,9 +90,9 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
                     </span>
                   ))}
                 </div>
-              </Link>
+              </div>
 
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 relative z-10">
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 pointer-events-auto">
                 <Link
                   href={pageFlowPath}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all shadow-xl shadow-purple-600/25 active:scale-95"
@@ -127,64 +124,78 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {otherPlugins.map((plugin) => (
-              <div
-                key={plugin.id}
-                className="glass-panel p-6 sm:p-7 rounded-2xl border border-zinc-800/90 flex flex-col justify-between transition-all"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-zinc-300">
-                      {lang === "ja" ? plugin.categoryJa : plugin.category}
-                    </span>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
-                      {plugin.status}
-                    </span>
-                  </div>
+            {otherPlugins.map((plugin) => {
+              const pluginLpPath = `/${lang}${plugin.landingPageUrl || `/plugins/${plugin.id}`}`;
+              return (
+                <div
+                  key={plugin.id}
+                  className="glass-panel p-6 sm:p-7 rounded-2xl border border-zinc-800/90 flex flex-col justify-between hover:border-purple-500/40 transition-all relative group shadow-lg"
+                >
+                  {/* Full-card link overlay */}
+                  <Link
+                    href={pluginLpPath}
+                    className="absolute inset-0 z-0"
+                    aria-label={plugin.name}
+                  />
 
-                  <h3 className="text-xl font-bold text-white">
-                    {plugin.name}
-                  </h3>
-                  <p className="text-xs font-medium text-purple-400">
-                    {lang === "ja" ? plugin.taglineJa : plugin.tagline}
-                  </p>
-                  <p className="text-sm text-zinc-400 leading-relaxed">
-                    {lang === "ja" ? plugin.descriptionJa : plugin.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {plugin.highlights.map((h, i) => (
-                      <span
-                        key={i}
-                        className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono"
-                      >
-                        {h}
+                  <div className="space-y-3 relative z-10 pointer-events-none">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-zinc-300">
+                        {lang === "ja" ? plugin.categoryJa : plugin.category}
                       </span>
-                    ))}
+                      <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+                        {plugin.status}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1.5">
+                        <span>{plugin.name}</span>
+                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all text-purple-400" />
+                      </h3>
+                    </div>
+
+                    <p className="text-xs font-medium text-purple-400">
+                      {lang === "ja" ? plugin.taglineJa : plugin.tagline}
+                    </p>
+                    <p className="text-sm text-zinc-400 leading-relaxed">
+                      {lang === "ja" ? plugin.descriptionJa : plugin.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 pt-2">
+                      {plugin.highlights.map((h, i) => (
+                        <span
+                          key={i}
+                          className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono"
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center justify-between gap-3 text-xs relative z-10 pointer-events-auto">
+                    <a
+                      href={plugin.obsidianInstallUri}
+                      className="inline-flex items-center gap-1.5 text-zinc-200 hover:text-white font-medium transition-colors"
+                    >
+                      <Download className="w-3.5 h-3.5 text-purple-400" />
+                      <span>{common.installInObsidian}</span>
+                    </a>
+
+                    <a
+                      href={plugin.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-zinc-200 transition-colors"
+                    >
+                      <Github className="w-3.5 h-3.5" />
+                      <span>GitHub</span>
+                    </a>
                   </div>
                 </div>
-
-                <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center justify-between gap-3 text-xs">
-                  <a
-                    href={plugin.obsidianInstallUri}
-                    className="inline-flex items-center gap-1.5 text-zinc-200 hover:text-white font-medium transition-colors"
-                  >
-                    <Download className="w-3.5 h-3.5 text-purple-400" />
-                    <span>{common.installInObsidian}</span>
-                  </a>
-
-                  <a
-                    href={plugin.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-zinc-200 transition-colors"
-                  >
-                    <Github className="w-3.5 h-3.5" />
-                    <span>GitHub</span>
-                  </a>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
