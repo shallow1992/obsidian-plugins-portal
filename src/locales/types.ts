@@ -37,6 +37,9 @@ export interface Dictionary {
       tag2: string;
       tag3: string;
       interactivePlayground: string;
+      videoTab: string;
+      simulatorTab: string;
+      videoBadge: string;
     };
     simulator: {
       folder: string;

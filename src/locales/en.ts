@@ -48,7 +48,10 @@ export const en: Dictionary = {
       tag1: "Obsidian v1.4.0+ Compatible",
       tag2: "Keyboard-First Navigation",
       tag3: "Zero Mouse Dependency",
-      interactivePlayground: "Interactive Live Playground"
+      interactivePlayground: "Interactive Live Playground",
+      videoTab: "Live Video Demo",
+      simulatorTab: "Interactive Simulator",
+      videoBadge: "Obsidian Workflow In Action"
     },
     simulator: {
       folder: "Research / PKM",

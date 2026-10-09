@@ -48,7 +48,10 @@ export const ja: Dictionary = {
       tag1: "Obsidian v1.4.0+ 完全対応",
       tag2: "キーボード完結ナビゲーション",
       tag3: "マウス操作への依存ゼロ",
-      interactivePlayground: "ブラウザで試せるライブ・シミュレータ"
+      interactivePlayground: "ブラウザで試せるライブ・シミュレータ",
+      videoTab: "実機デモ動画",
+      simulatorTab: "インタラクティブ・シミュレータ",
+      videoBadge: "Obsidian 実際の操作プレビュー"
     },
     simulator: {
       folder: "リサーチ / PKM",
