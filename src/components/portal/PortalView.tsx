@@ -132,7 +132,7 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-zinc-300">
-                      {plugin.category}
+                      {lang === "ja" ? plugin.categoryJa : plugin.category}
                     </span>
                     <span className="text-[11px] font-mono text-zinc-500">
                       {plugin.status}
@@ -142,9 +142,11 @@ export default function PortalView({ lang, dict }: PortalViewProps) {
                   <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
                     {plugin.name}
                   </h3>
-                  <p className="text-xs font-medium text-purple-400">{plugin.tagline}</p>
+                  <p className="text-xs font-medium text-purple-400">
+                    {lang === "ja" ? plugin.taglineJa : plugin.tagline}
+                  </p>
                   <p className="text-sm text-zinc-400 leading-relaxed">
-                    {plugin.description}
+                    {lang === "ja" ? plugin.descriptionJa : plugin.description}
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 pt-2">
